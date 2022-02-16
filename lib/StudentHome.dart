@@ -1,15 +1,13 @@
 import 'package:attendence_app/joinClass.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'package:hovering/hovering.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class StudentHome extends StatefulWidget {
+  const StudentHome({Key? key}) : super(key: key);
   @override
-  _HomeState createState() => _HomeState();
+  _StudentHomeState createState() => _StudentHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _StudentHomeState extends State<StudentHome> {
   Color tileColor = Colors.white;
 
   @override

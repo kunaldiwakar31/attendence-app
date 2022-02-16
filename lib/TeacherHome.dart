@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'createClass.dart';
-import 'joinClass.dart';
 
-class TeachetHomePage extends StatelessWidget {
-  const TeachetHomePage({Key? key}) : super(key: key);
+class TeacherHome extends StatelessWidget {
+  const TeacherHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +30,7 @@ class TeachetHomePage extends StatelessWidget {
         ),
       ),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             const UserAccountsDrawerHeader(
@@ -55,27 +50,18 @@ class TeachetHomePage extends StatelessWidget {
             ListTile(
               title: const Text('account'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('settings'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('log out'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),

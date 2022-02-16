@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'StudentHome.dart';
+import 'TeacherHome.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
-  UserCredential? userCredential;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -89,18 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        userCredential = await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: email, password: password)
-                            .catchError((e) {
-                          print(e);
-                        }).then((value) {
-                          print(value);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Home()));
-                        });
+                        signInWithEmailAndPassword(email, password);
                       }
                     },
                     child: const Padding(
@@ -117,5 +108,28 @@ class _LoginPageState extends State<LoginPage> {
                 ])),
           ),
         ));
+  }
+
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) async {
+        var future = await FirebaseFirestore.instance
+            .collection('User')
+            .where('uid', isEqualTo: value.user!.uid)
+            .get();
+        future.docs.forEach((element) {
+          var userType = element.data()['userType'];
+          userType == 'Student'
+              ? Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const StudentHome()))
+              : Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const TeacherHome()));
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

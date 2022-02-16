@@ -1,4 +1,5 @@
-import 'package:attendence_app/home.dart';
+import 'package:attendence_app/StudentHome.dart';
+import 'package:attendence_app/TeacherHome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -161,10 +162,17 @@ class _RegisterState extends State<Register> {
                               name, email, rollno, userType)
                           .then((value) {
                         if (value != null) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Home()));
+                          userType == 'Student'
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const StudentHome()))
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const TeacherHome()));
                         }
                       });
                     }
@@ -192,6 +200,7 @@ class _RegisterState extends State<Register> {
       User? user = (await _auth.createUserWithEmailAndPassword(
               email: email, password: password))
           .user;
+
       await DatabaseService(uid: user!.uid, userType: userType)
           .updateUserData(name, email, rollno, userType);
 
