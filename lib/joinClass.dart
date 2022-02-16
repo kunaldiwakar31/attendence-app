@@ -11,15 +11,15 @@ class JoinClass extends StatelessWidget {
         title: const Text("Join Class"),
       ),
       backgroundColor: const Color.fromARGB(255, 37, 130, 236),
-      body: Container(
-          child: Column(
-        children: const <Widget>[
-          SizedBox(
-            height: 20.0,
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: TextField(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+            child: Column(
+          children: [
+            SizedBox(
+              height: 20.0,
+            ),
+            const TextField(
               decoration: InputDecoration(
                 hintText: 'Class Code',
                 fillColor: Colors.white,
@@ -33,13 +33,26 @@ class JoinClass extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
               ),
             ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          ElevatedButton(onPressed: null, child: Text("Join Class")),
-        ],
-      )),
+            const SizedBox(
+              height: 22.0,
+            ),
+            ElevatedButton(
+              onPressed: null,
+              onHover: (value) {},
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Join Class',
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        )),
+      ),
     );
   }
 }
