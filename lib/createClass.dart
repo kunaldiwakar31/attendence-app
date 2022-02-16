@@ -1,9 +1,11 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'DatabaseService.dart';
 
 class CreateClass extends StatefulWidget {
-  const CreateClass({Key? key}) : super(key: key);
+  final uid;
+  CreateClass({this.uid});
 
   @override
   _CreateClassState createState() => _CreateClassState();
@@ -13,6 +15,7 @@ class _CreateClassState extends State<CreateClass> {
   final _formKey = GlobalKey<FormState>();
   String course_name = "";
   String semester = "1";
+  String name = '';
   final semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
   @override
@@ -42,8 +45,9 @@ class _CreateClassState extends State<CreateClass> {
                             color: Colors.lightBlueAccent, width: 2.0),
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   ),
-                  validator: (val) =>
-                      val!.isEmpty ? 'Enter Course Name !!' : null,
+                  validator: (val) {
+                    val!.isEmpty ? 'Enter Course Name !!' : null;
+                  },
                   onChanged: (val) {
                     setState(() {
                       course_name = val;
@@ -72,11 +76,18 @@ class _CreateClassState extends State<CreateClass> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 ElevatedButton(
-                  onPressed: (() {
-                    print(course_name);
-                    print(semester);
-                  }),
+                  onPressed: () async {
+                    if (course_name.isNotEmpty) {
+                      String uid = await DatabaseService(
+                              uid: widget.uid, userType: 'Teacher')
+                          .generateCode(course_name, semester, widget.uid);
+                      print(uid);
+                    }
+                  },
                   child: const Text('create'),
                 ),
               ],
@@ -92,60 +103,3 @@ DropdownMenuItem<String> buildMenuItem(String item) {
   return DropdownMenuItem(
       value: item, child: Text(item, style: const TextStyle(fontSize: 16)));
 }
-
-// class CreateClass extends StatelessWidget {
-//   const CreateClass({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Create Class"),
-//       ),
-//       backgroundColor: const Color.fromARGB(255, 37, 130, 236),
-//       body: Container(
-//           child: Column(
-//         children: const <Widget>[
-//           const SizedBox(
-//             height: 20.0,
-//           ),
-//           TextField(
-//             decoration: const InputDecoration(
-//               hintText: 'Course Name',
-//               fillColor: Colors.white,
-//               filled: true,
-//               enabledBorder: OutlineInputBorder(
-//                   borderSide: BorderSide(color: Colors.white, width: 2.0),
-//                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
-//               focusedBorder: OutlineInputBorder(
-//                   borderSide:
-//                       BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-//                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 20.0,
-//           ),
-//           TextField(
-//             decoration: const InputDecoration(
-//               hintText: 'Semester Number',
-//               fillColor: Colors.white,
-//               filled: true,
-//               enabledBorder: OutlineInputBorder(
-//                   borderSide: BorderSide(color: Colors.white, width: 2.0),
-//                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
-//               focusedBorder: OutlineInputBorder(
-//                   borderSide:
-//                       BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-//                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 20.0,
-//           ),
-//           ElevatedButton(onPressed: null, child: const Text("Create Code")),
-//         ],
-//       )),
-//     );
-//   }
-// }

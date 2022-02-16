@@ -2,7 +2,9 @@ import 'package:attendence_app/joinClass.dart';
 import 'package:flutter/material.dart';
 
 class StudentHome extends StatefulWidget {
-  const StudentHome({Key? key}) : super(key: key);
+  final uid;
+  StudentHome({this.uid});
+
   @override
   _StudentHomeState createState() => _StudentHomeState();
 }
