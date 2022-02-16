@@ -36,9 +36,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
-
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 37, 130, 236),
@@ -85,7 +83,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Home()));
+                                builder: (context) => const LoginPage()));
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),

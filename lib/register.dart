@@ -1,5 +1,8 @@
+import 'package:attendence_app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'DatabaseService.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -14,9 +17,11 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
-  String? userType = 'Student';
+  String rollno = '';
+  String userType = 'Student';
   final userTypes = ['Student', 'Teacher'];
   late UserCredential userCredential;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -115,21 +120,52 @@ class _RegisterState extends State<Register> {
                       items: userTypes.map(buildMenuItem).toList(),
                       onChanged: (value) => {
                         setState(() {
-                          userType = value;
+                          userType = value.toString();
                         })
                       },
                     ),
                   ),
                 ),
                 const SizedBox(height: 20.0),
+                userType == 'Student'
+                    ? TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Roll no',
+                          fillColor: Colors.white,
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.lightBlueAccent, width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
+                        ),
+                        validator: (val) =>
+                            val!.isEmpty ? 'Enter the Roll no !!' : null,
+                        onChanged: (val) {
+                          setState(() {
+                            rollno = val;
+                          });
+                        },
+                      )
+                    : const SizedBox(),
+                const SizedBox(height: 10.0),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      userCredential = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                              email: email, password: password)
-                          .catchError((e) {
-                        print(e);
+                      registerWithEmailAndPassword(
+                              name, email, rollno, userType)
+                          .then((value) {
+                        if (value != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Home()));
+                        }
                       });
                     }
                   },
@@ -148,6 +184,22 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  Future registerWithEmailAndPassword(
+      String name, String email, String rollno, String userType) async {
+    try {
+      User? user = (await _auth.createUserWithEmailAndPassword(
+              email: email, password: password))
+          .user;
+      await DatabaseService(uid: user!.uid, userType: userType)
+          .updateUserData(name, email, rollno, userType);
+
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }
 

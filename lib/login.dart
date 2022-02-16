@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -93,7 +95,10 @@ class _LoginPageState extends State<LoginPage> {
                             .catchError((e) {
                           print(e);
                         }).then((value) {
-                          print('Success');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Home()));
                         });
                       }
                     },
