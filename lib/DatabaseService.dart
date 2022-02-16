@@ -14,6 +14,10 @@ class DatabaseService {
         ? userReference.collection('Student').doc(uid)
         : userReference.collection('Teacher').doc(uid);
 
+    Map<String, dynamic> data = {'uid': uid, 'userType': userType};
+
+    await userReference.collection('User').add(data);
+
     return await documentReference.set({
       'name': name,
       'email': email,
