@@ -1,8 +1,20 @@
 import 'package:attendence_app/login.dart';
+import 'package:attendence_app/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyCrCQ_K9NnYOm9oHP--j9bS8xqlF8aFiBg",
+      appId: "1:464336117304:android:81350501635315642350cd",
+      messagingSenderId: "464336117304",
+      projectId: "attendence-app-f3f49",
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -21,11 +33,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-    print(size.height);
     return Scaffold(
-      backgroundColor: Colors.blue[800],
+      backgroundColor: const Color.fromARGB(255, 37, 130, 236),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,13 +50,18 @@ class HomePage extends StatelessWidget {
                 const SizedBox(width: 20),
                 Expanded(
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Register()));
+                      },
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Sign up',
                           style: TextStyle(
-                              fontSize: 20, fontStyle: FontStyle.normal),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       )),
                 ),
@@ -71,7 +85,7 @@ class HomePage extends StatelessWidget {
                         child: Text(
                           'Login',
                           style: TextStyle(
-                              fontSize: 20, fontStyle: FontStyle.normal),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       )),
                 ),
