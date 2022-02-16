@@ -95,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                             .catchError((e) {
                           print(e);
                         }).then((value) {
+                          print(value);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
