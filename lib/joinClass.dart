@@ -10,28 +10,31 @@ class JoinClass extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Join Class"),
       ),
+      backgroundColor: const Color.fromARGB(255, 37, 130, 236),
       body: Container(
           child: Column(
         children: const <Widget>[
+          SizedBox(
+            height: 20.0,
+          ),
           TextField(
             decoration: InputDecoration(
-              border: InputBorder.none,
-              labelText: 'ClassCode',
-              hintText: 'Enter ClassCode',
+              hintText: 'Class Code',
+              fillColor: Colors.white,
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
             ),
           ),
-          TextField(
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                labelText: 'RollNo',
-                hintText: 'Enter Your Roll Number'),
+          SizedBox(
+            height: 20.0,
           ),
-          TextField(
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                labelText: 'Name',
-                hintText: 'Enter Full Name'),
-          ),
+          ElevatedButton(onPressed: null, child: Text("Join Class")),
         ],
       )),
     );
