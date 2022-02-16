@@ -119,8 +119,12 @@ class _LoginPageState extends State<LoginPage> {
             .collection('User')
             .where('uid', isEqualTo: value.user!.uid)
             .get();
+        if (future.docs.isEmpty) {
+          print('Fail');
+        }
         future.docs.forEach((element) {
           var userType = element.data()['userType'];
+          print(userType);
           userType == 'Student'
               ? Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const StudentHome()))
