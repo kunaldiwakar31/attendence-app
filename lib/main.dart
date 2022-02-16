@@ -1,6 +1,9 @@
+import 'package:attendence_app/home.dart';
 import 'package:attendence_app/login.dart';
+
 import 'package:attendence_app/register.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -33,6 +36,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Size size = MediaQuery.of(context).size;
+
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 37, 130, 236),
       body: Center(
@@ -78,7 +85,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginPage()));
+                                builder: (context) => const Home()));
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
