@@ -1,3 +1,4 @@
+import 'package:attendence_app/TeacherHome.dart';
 import 'package:attendence_app/home.dart';
 import 'package:attendence_app/login.dart';
 
