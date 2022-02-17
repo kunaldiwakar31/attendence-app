@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'DatabaseService.dart';
+import 'package:flutter/services.dart';
 
 class CreateClass extends StatefulWidget {
   final uid;
@@ -13,10 +14,11 @@ class CreateClass extends StatefulWidget {
 
 class _CreateClassState extends State<CreateClass> {
   final _formKey = GlobalKey<FormState>();
-  String course_name = "";
-  String semester = "1";
+  String course_name = '';
+  String semester = '1';
   String name = '';
   final semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  String uid = '';
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class _CreateClassState extends State<CreateClass> {
       appBar: AppBar(
         title: const Text("Create Class"),
       ),
-      backgroundColor: const Color.fromARGB(255, 37, 130, 236),
+      backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
@@ -79,17 +81,63 @@ class _CreateClassState extends State<CreateClass> {
                 const SizedBox(
                   height: 20.0,
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (course_name.isNotEmpty) {
-                      String uid = await DatabaseService(
-                              uid: widget.uid, userType: 'Teacher')
-                          .generateCode(course_name, semester, widget.uid);
-                      print(uid);
-                    }
-                  },
-                  child: const Text('create'),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (course_name.isNotEmpty) {
+                        uid = await DatabaseService(
+                                uid: widget.uid, userType: 'Teacher')
+                            .generateCode(course_name, semester, widget.uid);
+                        if (uid != '') {
+                          setState(() {});
+                        }
+                      }
+                    },
+                    child: const Text(
+                      'Create',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ),
+                const SizedBox(
+                  height: 30,
+                ),
+                uid != ''
+                    ? uid == 'Class Already Exists'
+                        ? const Text('Class Already Exists!!',
+                            style: TextStyle(color: Colors.red, fontSize: 14))
+                        : Container(
+                            height: 50,
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                color: Colors.white),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 5,
+                                    child: Text(
+                                      uid,
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                  Expanded(
+                                      flex: 1,
+                                      child: IconButton(
+                                          onPressed: () {
+                                            Clipboard.setData(
+                                                ClipboardData(text: uid));
+                                          },
+                                          icon:
+                                              const Icon(Icons.copy, size: 20)))
+                                ],
+                              ),
+                            ),
+                          )
+                    : const SizedBox()
               ],
             ),
           ),
