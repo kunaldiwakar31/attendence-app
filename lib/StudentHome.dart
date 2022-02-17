@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StudentHome extends StatefulWidget {
-  const StudentHome({Key? key}) : super(key: key);
+  final uid;
+  StudentHome({this.uid});
+
   @override
   _StudentHomeState createState() => _StudentHomeState();
 }
@@ -22,18 +24,28 @@ class _StudentHomeState extends State<StudentHome> {
       body: Container(
         child: Column(
           children: List.generate(
-            name.length,
-            (index) => ListTile(
-              title: Text(
-                name[index],
-                style: const TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              subtitle: const Text('Teacher Name'),
-              trailing: const Text('70%'),
-            ),
-          ),
+              name.length,
+              (index) => Container(
+                    decoration: BoxDecoration(
+                      color: tileColor,
+                      border: const Border(
+                        bottom: BorderSide(
+                          color: Colors.black38,
+                          width: 0.5,
+                        ),
+                      ),
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        name[index],
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      subtitle: const Text('Teacher Name'),
+                      trailing: const Text('70%'),
+                    ),
+                  )),
         ),
       ),
       drawer: Drawer(

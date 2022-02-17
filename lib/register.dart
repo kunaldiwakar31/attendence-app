@@ -162,17 +162,20 @@ class _RegisterState extends State<Register> {
                               name, email, rollno, userType)
                           .then((value) {
                         if (value != null) {
+                          String uid = value.uid;
                           userType == 'Student'
                               ? Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const StudentHome()))
+                                      builder: (context) => StudentHome(
+                                            uid: uid,
+                                          )))
                               : Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const TeacherHome()));
+                                      builder: (context) => TeacherHome(
+                                            uid: uid,
+                                          )));
                         }
                       });
                     }

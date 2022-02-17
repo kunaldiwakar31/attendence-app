@@ -26,4 +26,18 @@ class DatabaseService {
       'Subjects': []
     });
   }
+
+  Future<String> generateCode(
+      String subject, String semester, String uid) async {
+    var documentSnapshot =
+        await userReference.collection('Teacher').doc(uid).get();
+    String name = documentSnapshot.data()!['name'];
+    Map<String, dynamic> data = {
+      'subject': subject,
+      'semester': semester,
+      'teacher': name
+    };
+    var documentReference = await userReference.collection('Classes').add(data);
+    return documentReference.id;
+  }
 }
