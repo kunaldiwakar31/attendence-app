@@ -1,4 +1,5 @@
 import 'package:attendence_app/joinClass.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StudentHome extends StatefulWidget {
@@ -9,6 +10,7 @@ class StudentHome extends StatefulWidget {
 
 class _StudentHomeState extends State<StudentHome> {
   Color tileColor = Colors.white;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -35,52 +37,39 @@ class _StudentHomeState extends State<StudentHome> {
         ),
       ),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             const UserAccountsDrawerHeader(
-              accountName: const Text("User"),
-              accountEmail: const Text("user@gmail.com"),
+              accountName: Text('User'),
+              accountEmail: Text('user@gmail.com'),
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
               currentAccountPicture: CircleAvatar(
                 radius: 50.0,
-                backgroundColor: const Color(0xFF778899),
+                backgroundColor: Color(0xFF778899),
                 backgroundImage:
                     NetworkImage("http://tineye.com/images/widgets/mona.jpg"),
               ),
-              currentAccountPictureSize: const Size.square(72.0),
+              currentAccountPictureSize: Size.square(72.0),
             ),
             ListTile(
               title: const Text('account'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('settings'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('log out'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
+                signout();
               },
             ),
           ],
@@ -96,11 +85,13 @@ class _StudentHomeState extends State<StudentHome> {
       ),
     );
   }
+
+  Future signout() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }
-
-
-
-/*
-
-
- */
