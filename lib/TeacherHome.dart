@@ -4,7 +4,6 @@ import 'createClass.dart';
 
 class TeacherHome extends StatelessWidget {
   const TeacherHome({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     List<String> courses = ['Math', 'English', 'Punjabi'];
@@ -15,18 +14,25 @@ class TeacherHome extends StatelessWidget {
       body: Container(
         child: Column(
           children: List.generate(
-            courses.length,
-            (index) => ListTile(
-              title: Text(
-                courses[index],
-                style: const TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              subtitle: const Text('Semester'),
-              trailing: const Text('70'),
-            ),
-          ),
+              courses.length,
+              (index) => Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black38,
+                        width: 0.5,
+                      ),
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        courses[index],
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      subtitle: const Text('Semester'),
+                      trailing: const Text('70'),
+                    ),
+                  )),
         ),
       ),
       drawer: Drawer(
@@ -76,6 +82,7 @@ class TeacherHome extends StatelessWidget {
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
+      backgroundColor: Colors.grey.shade200,
     );
   }
 }
