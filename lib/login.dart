@@ -115,17 +115,31 @@ class _LoginPageState extends State<LoginPage> {
       _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
+        String uid = value.user!.uid;
+
         var future = await FirebaseFirestore.instance
             .collection('User')
-            .where('uid', isEqualTo: value.user!.uid)
+            .where('uid', isEqualTo: uid)
             .get();
+        if (future.docs.isEmpty) {
+          print('Fail');
+        }
         future.docs.forEach((element) {
           var userType = element.data()['userType'];
+          print(userType);
           userType == 'Student'
-              ? Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const StudentHome()))
-              : Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const TeacherHome()));
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => StudentHome(
+                            uid: uid,
+                          )))
+              : Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TeacherHome(
+                            uid: uid,
+                          )));
         });
       });
     } catch (e) {

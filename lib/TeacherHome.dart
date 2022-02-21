@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'createClass.dart';
 
+<<<<<<< HEAD
 class TeacherHome extends StatelessWidget {
   const TeacherHome({Key? key}) : super(key: key);
+=======
+class TeacherHome extends StatefulWidget {
+  final uid;
+  TeacherHome({this.uid});
+
+>>>>>>> f0e227c2ce7ab18a01a10c74f7e04d6b6fe16926
+  @override
+  State<TeacherHome> createState() => _TeacherHomeState();
+}
+
+class _TeacherHomeState extends State<TeacherHome> {
   @override
   Widget build(BuildContext context) {
     List<String> courses = ['Math', 'English', 'Punjabi'];
@@ -76,8 +88,12 @@ class TeacherHome extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const CreateClass()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CreateClass(
+                        uid: widget.uid,
+                      )));
         },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),

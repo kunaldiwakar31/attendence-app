@@ -1,3 +1,6 @@
+import 'package:attendence_app/DataStructure.dart';
+import 'package:attendence_app/TeacherHome.dart';
+import 'package:attendence_app/createClass.dart';
 import 'package:attendence_app/login.dart';
 import 'package:attendence_app/register.dart';
 import 'package:flutter/material.dart';
