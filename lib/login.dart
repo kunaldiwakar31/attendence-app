@@ -1,3 +1,4 @@
+import 'package:attendence_app/AppConstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
         String uid = value.user!.uid;
 
         var future = await FirebaseFirestore.instance
-            .collection('User')
+            .collection(AppConstants.usersCollection)
             .where('uid', isEqualTo: uid)
             .get();
         if (future.docs.isEmpty) {

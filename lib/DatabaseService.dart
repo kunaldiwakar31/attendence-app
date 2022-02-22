@@ -1,3 +1,4 @@
+import 'package:attendence_app/AppConstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
@@ -11,12 +12,12 @@ class DatabaseService {
   Future updateUserData(
       String name, String email, String rollno, String userType) async {
     DocumentReference documentReference = userType == 'Student'
-        ? userReference.collection('Student').doc(uid)
-        : userReference.collection('Teacher').doc(uid);
+        ? userReference.collection(AppConstants.studentsCollection).doc(uid)
+        : userReference.collection(AppConstants.teachersCollection).doc(uid);
 
     Map<String, dynamic> data = {'uid': uid, 'userType': userType};
 
-    await userReference.collection('User').add(data);
+    await userReference.collection(AppConstants.usersCollection).add(data);
 
     return await documentReference.set({
       'name': name,
@@ -29,8 +30,10 @@ class DatabaseService {
 
   Future<String> generateCode(
       String subject, String semester, String uid) async {
-    var documentSnapshot =
-        await userReference.collection('Teachers').doc(uid).get();
+    var documentSnapshot = await userReference
+        .collection(AppConstants.teachersCollection)
+        .doc(uid)
+        .get();
     List subjects = documentSnapshot.data()!['Subjects'];
     bool exists = false;
     String s = subject + ':' + semester;
@@ -50,7 +53,9 @@ class DatabaseService {
       'teacher': name
     };
 
-    var documentReference = await userReference.collection('Classes').add(data);
+    var documentReference = await userReference
+        .collection(AppConstants.classesCollection)
+        .add(data);
     subjects.add(subject + ':' + semester + ':' + documentReference.id);
     Map<String, dynamic> subjectData = {
       'Subjects': subjects,
@@ -60,7 +65,18 @@ class DatabaseService {
       'userType': 'Teacher'
     };
 
-    await userReference.collection('Teachers').doc(uid).set(subjectData);
+    await userReference
+        .collection(AppConstants.teachersCollection)
+        .doc(uid)
+        .set(subjectData);
     return documentReference.id;
+  }
+
+  Future getSubjects(String uid) async {
+    var future = await userReference
+        .collection(AppConstants.teachersCollection)
+        .doc(uid)
+        .get();
+    return future.data()!['Subjects'];
   }
 }

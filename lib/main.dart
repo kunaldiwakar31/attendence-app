@@ -1,10 +1,12 @@
 import 'package:attendence_app/DataStructure.dart';
 import 'package:attendence_app/TeacherHome.dart';
+import 'package:attendence_app/TeachersBloc.dart';
 import 'package:attendence_app/createClass.dart';
 import 'package:attendence_app/login.dart';
 import 'package:attendence_app/register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomePage());
+    return MaterialApp(
+        home: ChangeNotifierProvider<TeachersBloc>(
+            create: (_) => TeachersBloc(), child: const HomePage()));
   }
 }
 

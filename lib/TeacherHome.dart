@@ -1,4 +1,8 @@
+import 'package:attendence_app/DataStructure.dart';
+import 'package:attendence_app/DatabaseService.dart';
+import 'package:attendence_app/TeachersBloc.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'createClass.dart';
 
@@ -10,9 +14,38 @@ class TeacherHome extends StatefulWidget {
 }
 
 class _TeacherHomeState extends State<TeacherHome> {
+  List subjects = [];
+  List<String> courses = [];
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  void _getUserData() {
+    _getUserDataAsync().then((value) => {_changeState()});
+  }
+
+  Future _getUserDataAsync() async {
+    subjects = await Provider.of<TeachersBloc>(context, listen: false)
+        .getSubjectList(widget.uid);
+
+    print('Subjects');
+    print(subjects);
+
+    for (String sub in subjects) {
+      var split = sub.split(':');
+      courses.add(split[0]);
+    }
+  }
+
+  void _changeState() {
+    if (!mounted) return;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<String> courses = ['Math', 'English', 'Punjabi'];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Attendence App"),
