@@ -37,10 +37,12 @@ class _TeacherHomeState extends State<TeacherHome> {
   Widget build(BuildContext context) {
     List subjects = Provider.of<TeachersBloc>(context).subjectsList;
     List<String> courses = [];
+    List<String> semesters = [];
 
     for (String sub in subjects) {
       var split = sub.split(':');
       courses.add(split[0]);
+      semesters.add(split[1]);
     }
 
     return Scaffold(
@@ -58,7 +60,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                   color: Colors.black,
                 ),
               ),
-              subtitle: const Text('Semester'),
+              subtitle: Text('Semester : ' + semesters[index]),
               trailing: const Text('70'),
             ),
           ),
