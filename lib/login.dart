@@ -127,7 +127,6 @@ class _LoginPageState extends State<LoginPage> {
         }
         future.docs.forEach((element) {
           var userType = element.data()['userType'];
-          print(userType);
           userType == 'Student'
               ? Navigator.push(
                   context,

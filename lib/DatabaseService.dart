@@ -34,9 +34,11 @@ class DatabaseService {
         .collection(AppConstants.teachersCollection)
         .doc(uid)
         .get();
+
     List subjects = documentSnapshot.data()!['Subjects'];
     bool exists = false;
     String s = subject + ':' + semester;
+
     for (String sub in subjects) {
       var split = sub.split(':');
       String checker = split[0] + ':' + split[1];
@@ -56,6 +58,7 @@ class DatabaseService {
     var documentReference = await userReference
         .collection(AppConstants.classesCollection)
         .add(data);
+
     subjects.add(subject + ':' + semester + ':' + documentReference.id);
     Map<String, dynamic> subjectData = {
       'Subjects': subjects,
@@ -69,6 +72,7 @@ class DatabaseService {
         .collection(AppConstants.teachersCollection)
         .doc(uid)
         .set(subjectData);
+
     return documentReference.id;
   }
 

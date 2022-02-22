@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TeachersBloc extends ChangeNotifier {
-  late List _subjectsList;
+  List _subjectsList = [];
 
   List get subjectsList {
     assert(_subjectsList != null);
@@ -22,5 +22,6 @@ class TeachersBloc extends ChangeNotifier {
     subjectsList = documentSnapshot.data()!['Subjects'];
 
     _subjectsList = subjectsList;
+    notifyListeners();
   }
 }
