@@ -10,6 +10,7 @@ class JoinClass extends StatefulWidget {
   State<JoinClass> createState() => _JoinClassState();
 }
 
+
 class _JoinClassState extends State<JoinClass> {
   @override
   Widget build(BuildContext context) {

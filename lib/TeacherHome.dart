@@ -1,3 +1,4 @@
+import 'package:attendence_app/TeacherClass.dart';
 import 'package:attendence_app/TeachersBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,11 +37,13 @@ class _TeacherHomeState extends State<TeacherHome> {
     List subjects = Provider.of<TeachersBloc>(context).subjectsList;
     List<String> courses = [];
     List<String> semesters = [];
+    List<String> classUids = [];
 
     for (String sub in subjects) {
       var split = sub.split(':');
       courses.add(split[0]);
       semesters.add(split[1]);
+      classUids.add(split[2]);
     }
 
     return Scaffold(
@@ -50,25 +53,26 @@ class _TeacherHomeState extends State<TeacherHome> {
       body: Container(
         child: Column(
           children: List.generate(
-              courses.length,
-              (index) => Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black38,
-                        width: 0.5,
-                      ),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        courses[index],
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      subtitle: const Text('Semester'),
-                      trailing: const Text('70'),
-                    ),
-                  )),
+
+            courses.length,
+            (index) => ListTile(
+              title: Text(
+                courses[index],
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              subtitle: Text('Semester : ' + semesters[index]),
+              trailing: const Text('70'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TeacherClass(uid: classUids[index])));
+              },
+            ),
+          ),
         ),
       ),
       drawer: Drawer(
