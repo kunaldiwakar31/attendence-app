@@ -1,4 +1,6 @@
+import 'package:attendence_app/Authenticate.dart';
 import 'package:attendence_app/TeachersBloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +15,8 @@ class TeacherHome extends StatefulWidget {
 }
 
 class _TeacherHomeState extends State<TeacherHome> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     super.initState();
@@ -99,7 +103,11 @@ class _TeacherHomeState extends State<TeacherHome> {
             ListTile(
               title: const Text('log out'),
               onTap: () {
-                Navigator.pop(context);
+                signout();
+                Navigator.of(context)
+                    .pushReplacement(MaterialPageRoute(builder: (context) {
+                  return const Authenticate();
+                }));
               },
             ),
           ],
@@ -118,5 +126,15 @@ class _TeacherHomeState extends State<TeacherHome> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Future signout() async {
+    try {
+      print('Logout');
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }

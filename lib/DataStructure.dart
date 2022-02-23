@@ -21,9 +21,9 @@ class Teacher {
   Teacher({required this.name, required this.email, required this.userType});
 }
 
-class CustomUser {
+class CurrentUser {
   String uid;
   String userType;
 
-  CustomUser({required this.uid, required this.userType});
+  CurrentUser({required this.uid, required this.userType});
 }
