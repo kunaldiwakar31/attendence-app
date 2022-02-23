@@ -89,8 +89,10 @@ class _StudentHomeState extends State<StudentHome> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const JoinClass()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => JoinClass(uid: widget.uid)));
         },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),

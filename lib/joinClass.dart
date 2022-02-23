@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class JoinClass extends StatelessWidget {
-  const JoinClass({Key? key}) : super(key: key);
+  final uid;
+  JoinClass({this.uid});
 
   @override
   Widget build(BuildContext context) {
