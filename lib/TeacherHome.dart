@@ -1,15 +1,14 @@
 import 'package:attendence_app/Authenticate.dart';
+import 'package:attendence_app/TeacherClass.dart';
 import 'package:attendence_app/TeachersBloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'createClass.dart';
 
 class TeacherHome extends StatefulWidget {
   final uid;
   TeacherHome({this.uid});
-
   @override
   State<TeacherHome> createState() => _TeacherHomeState();
 }
@@ -42,11 +41,13 @@ class _TeacherHomeState extends State<TeacherHome> {
     List subjects = Provider.of<TeachersBloc>(context).subjectsList;
     List<String> courses = [];
     List<String> semesters = [];
+    List<String> classUids = [];
 
     for (String sub in subjects) {
       var split = sub.split(':');
       courses.add(split[0]);
       semesters.add(split[1]);
+      classUids.add(split[2]);
     }
 
     return Scaffold(
@@ -66,6 +67,13 @@ class _TeacherHomeState extends State<TeacherHome> {
               ),
               subtitle: Text('Semester : ' + semesters[index]),
               trailing: const Text('70'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TeacherClass(uid: classUids[index])));
+              },
             ),
           ),
         ),
@@ -125,6 +133,7 @@ class _TeacherHomeState extends State<TeacherHome> {
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
+      backgroundColor: Colors.grey.shade200,
     );
   }
 
