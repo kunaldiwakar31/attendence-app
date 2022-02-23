@@ -16,34 +16,34 @@ class _StudentHomeState extends State<StudentHome> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> name = ['Arsh', 'Inder', 'Majnu'];
+    List<String> name = ['Maths', 'Physics', 'Chemistry'];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Attendence App"),
       ),
       body: Container(
+        key: GlobalKey(),
         child: Column(
           children: List.generate(
               name.length,
-              (index) => Container(
-                    decoration: BoxDecoration(
-                      color: tileColor,
-                      border: const Border(
-                        bottom: BorderSide(
-                          color: Colors.black38,
-                          width: 0.5,
-                        ),
+              (index) => Padding(
+                    padding:
+                        const EdgeInsets.only(top: 8.0, left: 6.0, right: 6.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: tileColor,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        name[index],
-                        style: const TextStyle(
-                          color: Colors.black,
+                      child: ListTile(
+                        title: Text(
+                          name[index],
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
                         ),
+                        subtitle: const Text('Teacher Name'),
+                        trailing: const Text('70%'),
                       ),
-                      subtitle: const Text('Teacher Name'),
-                      trailing: const Text('70%'),
                     ),
                   )),
         ),
@@ -97,6 +97,7 @@ class _StudentHomeState extends State<StudentHome> {
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
+      backgroundColor: Colors.grey.shade200,
     );
   }
 

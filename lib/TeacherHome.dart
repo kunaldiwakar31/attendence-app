@@ -2,13 +2,11 @@ import 'package:attendence_app/TeacherClass.dart';
 import 'package:attendence_app/TeachersBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'createClass.dart';
 
 class TeacherHome extends StatefulWidget {
   final uid;
   TeacherHome({this.uid});
-
   @override
   State<TeacherHome> createState() => _TeacherHomeState();
 }
@@ -55,6 +53,7 @@ class _TeacherHomeState extends State<TeacherHome> {
       body: Container(
         child: Column(
           children: List.generate(
+
             courses.length,
             (index) => ListTile(
               title: Text(
@@ -127,6 +126,7 @@ class _TeacherHomeState extends State<TeacherHome> {
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
+      backgroundColor: Colors.grey.shade200,
     );
   }
 }
