@@ -1,8 +1,11 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'DatabaseService.dart';
 import 'package:flutter/services.dart';
+
+import 'TeachersBloc.dart';
 
 class CreateClass extends StatefulWidget {
   final uid;
@@ -89,6 +92,9 @@ class _CreateClassState extends State<CreateClass> {
                         uid = await DatabaseService(
                                 uid: widget.uid, userType: 'Teacher')
                             .generateCode(course_name, semester, widget.uid);
+
+                        await Provider.of<TeachersBloc>(context, listen: false)
+                            .getSubjectList(widget.uid);
                         if (uid != '') {
                           setState(() {});
                         }

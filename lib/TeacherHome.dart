@@ -1,9 +1,6 @@
-import 'package:attendence_app/DataStructure.dart';
-import 'package:attendence_app/DatabaseService.dart';
 import 'package:attendence_app/TeachersBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'createClass.dart';
 
 class TeacherHome extends StatefulWidget {
@@ -14,8 +11,6 @@ class TeacherHome extends StatefulWidget {
 }
 
 class _TeacherHomeState extends State<TeacherHome> {
-  List subjects = [];
-  List<String> courses = [];
   @override
   void initState() {
     super.initState();
@@ -27,16 +22,8 @@ class _TeacherHomeState extends State<TeacherHome> {
   }
 
   Future _getUserDataAsync() async {
-    subjects = await Provider.of<TeachersBloc>(context, listen: false)
+    await Provider.of<TeachersBloc>(context, listen: false)
         .getSubjectList(widget.uid);
-
-    print('Subjects');
-    print(subjects);
-
-    for (String sub in subjects) {
-      var split = sub.split(':');
-      courses.add(split[0]);
-    }
   }
 
   void _changeState() {
@@ -46,6 +33,16 @@ class _TeacherHomeState extends State<TeacherHome> {
 
   @override
   Widget build(BuildContext context) {
+    List subjects = Provider.of<TeachersBloc>(context).subjectsList;
+    List<String> courses = [];
+    List<String> semesters = [];
+
+    for (String sub in subjects) {
+      var split = sub.split(':');
+      courses.add(split[0]);
+      semesters.add(split[1]);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Attendence App"),
