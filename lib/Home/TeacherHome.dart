@@ -1,14 +1,15 @@
-import 'package:attendence_app/Authenticate.dart';
+import 'package:attendence_app/Authentication/Authenticate.dart';
 import 'package:attendence_app/TeacherClass.dart';
-import 'package:attendence_app/TeachersBloc.dart';
+import 'package:attendence_app/Blocs/TeachersBloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'createClass.dart';
+import '../ClassesFunc/createClass.dart';
 
 class TeacherHome extends StatefulWidget {
   final uid;
   TeacherHome({this.uid});
+
   @override
   State<TeacherHome> createState() => _TeacherHomeState();
 }
@@ -28,7 +29,7 @@ class _TeacherHomeState extends State<TeacherHome> {
 
   Future _getUserDataAsync() async {
     await Provider.of<TeachersBloc>(context, listen: false)
-        .getSubjectList(widget.uid);
+        .getTeacherInfo(widget.uid);
   }
 
   void _changeState() {
@@ -49,6 +50,8 @@ class _TeacherHomeState extends State<TeacherHome> {
       semesters.add(split[1]);
       classUids.add(split[2]);
     }
+
+    var currentTeacher = Provider.of<TeachersBloc>(context).currentTeacher;
 
     return Scaffold(
       appBar: AppBar(
@@ -82,13 +85,13 @@ class _TeacherHomeState extends State<TeacherHome> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const UserAccountsDrawerHeader(
-              accountName: Text("User"),
-              accountEmail: Text("user@gmail.com"),
-              decoration: BoxDecoration(
+            UserAccountsDrawerHeader(
+              accountName: Text(currentTeacher.name),
+              accountEmail: Text(currentTeacher.email),
+              decoration: const BoxDecoration(
                 color: Colors.blue,
               ),
-              currentAccountPicture: CircleAvatar(
+              currentAccountPicture: const CircleAvatar(
                 radius: 50.0,
                 backgroundColor: const Color(0xFF778899),
                 backgroundImage:

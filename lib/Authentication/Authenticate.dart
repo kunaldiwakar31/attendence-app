@@ -1,4 +1,4 @@
-import 'package:attendence_app/register.dart';
+import 'package:attendence_app/Authentication/register.dart';
 import 'package:flutter/material.dart';
 
 import 'login.dart';

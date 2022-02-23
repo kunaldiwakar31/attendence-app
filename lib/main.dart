@@ -1,9 +1,9 @@
-import 'package:attendence_app/TeachersBloc.dart';
+import 'package:attendence_app/Blocs/TeachersBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-import 'Authenticate.dart';
+import 'Authentication/Authenticate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

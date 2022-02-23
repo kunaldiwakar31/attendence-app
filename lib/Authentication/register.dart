@@ -1,9 +1,9 @@
-import 'package:attendence_app/StudentHome.dart';
-import 'package:attendence_app/TeacherHome.dart';
+import 'package:attendence_app/Home/StudentHome.dart';
+import 'package:attendence_app/Home/TeacherHome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'DatabaseService.dart';
+import '../DatabaseService.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);

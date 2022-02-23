@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TeacherClass extends StatefulWidget {
   final uid;
   TeacherClass({this.uid});
+
   @override
   _TeacherClassState createState() => _TeacherClassState();
 }

@@ -28,7 +28,7 @@ class _JoinClassState extends State<JoinClass> {
                 height: 20.0,
               ),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Class Code',
                   fillColor: Colors.white,
                   filled: true,

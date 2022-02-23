@@ -1,7 +1,9 @@
-import 'package:attendence_app/Authenticate.dart';
-import 'package:attendence_app/joinClass.dart';
+import 'package:attendence_app/Authentication/Authenticate.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../Blocs/StudentsBloc.dart';
+import '../ClassesFunc/joinClass.dart';
 
 class StudentHome extends StatefulWidget {
   final uid;
@@ -14,10 +16,31 @@ class StudentHome extends StatefulWidget {
 class _StudentHomeState extends State<StudentHome> {
   Color tileColor = Colors.white;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  void _getUserData() {
+    _getUserDataAsync().then((value) => {_changeState()});
+  }
+
+  Future _getUserDataAsync() async {
+    await Provider.of<StudentsBloc>(context, listen: false)
+        .getStudentInfo(widget.uid);
+  }
+
+  void _changeState() {
+    if (!mounted) return;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     List<String> name = ['Maths', 'Physics', 'Chemistry'];
+    var currentStudent = Provider.of<StudentsBloc>(context).currentStudent;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Attendence App"),
@@ -53,13 +76,13 @@ class _StudentHomeState extends State<StudentHome> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const UserAccountsDrawerHeader(
-              accountName: Text('User'),
-              accountEmail: Text('user@gmail.com'),
-              decoration: BoxDecoration(
+            UserAccountsDrawerHeader(
+              accountName: Text(currentStudent.name),
+              accountEmail: Text(currentStudent.email),
+              decoration: const BoxDecoration(
                 color: Colors.blue,
               ),
-              currentAccountPicture: CircleAvatar(
+              currentAccountPicture: const CircleAvatar(
                 radius: 50.0,
                 backgroundColor: Color(0xFF778899),
                 backgroundImage:

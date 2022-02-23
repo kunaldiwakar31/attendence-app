@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'DatabaseService.dart';
+import '../DatabaseService.dart';
 import 'package:flutter/services.dart';
 
-import 'TeachersBloc.dart';
+import '../Blocs/TeachersBloc.dart';
 
 class CreateClass extends StatefulWidget {
   final uid;
@@ -94,7 +94,7 @@ class _CreateClassState extends State<CreateClass> {
                             .generateCode(course_name, semester, widget.uid);
 
                         await Provider.of<TeachersBloc>(context, listen: false)
-                            .getSubjectList(widget.uid);
+                            .getTeacherInfo(widget.uid);
                         if (uid != '') {
                           setState(() {});
                         }
