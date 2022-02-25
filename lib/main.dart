@@ -1,9 +1,9 @@
+import 'package:attendence_app/Authentication/Authenticate.dart';
 import 'package:attendence_app/Blocs/TeachersBloc.dart';
+import 'package:attendence_app/Home/TeacherHome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-
-import 'Authentication/Authenticate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TeachersBloc>(
       create: (_) => TeachersBloc(),
-      child: const MaterialApp(home: Authenticate()),
+      child: MaterialApp(
+          theme: ThemeData(
+            primaryColor: const Color.fromRGBO(50, 75, 205, 1),
+            primaryColorLight: const Color.fromARGB(255, 68, 92, 228),
+          ),
+          home: const Authenticate()),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:attendence_app/Authentication/Authenticate.dart';
+import 'package:attendence_app/CommonWidgets/Drawer.dart';
 import 'package:attendence_app/TeacherClass.dart';
 import 'package:attendence_app/Blocs/TeachersBloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,6 +56,7 @@ class _TeacherHomeState extends State<TeacherHome> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Attendence App"),
+        backgroundColor: Theme.of(context).primaryColorLight,
       ),
       body: Container(
         child: Column(
@@ -81,49 +82,8 @@ class _TeacherHomeState extends State<TeacherHome> {
           ),
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(currentTeacher.name),
-              accountEmail: Text(currentTeacher.email),
-              decoration: const BoxDecoration(
-                color: Colors.blue,
-              ),
-              currentAccountPicture: const CircleAvatar(
-                radius: 50.0,
-                backgroundColor: const Color(0xFF778899),
-                backgroundImage:
-                    NetworkImage("http://tineye.com/images/widgets/mona.jpg"),
-              ),
-              currentAccountPictureSize: const Size.square(72.0),
-            ),
-            ListTile(
-              title: const Text('account'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('log out'),
-              onTap: () {
-                signout();
-                Navigator.of(context)
-                    .pushReplacement(MaterialPageRoute(builder: (context) {
-                  return const Authenticate();
-                }));
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer:
+          CustomDrawer(name: currentTeacher.name, email: currentTeacher.email),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -133,20 +93,10 @@ class _TeacherHomeState extends State<TeacherHome> {
                         uid: widget.uid,
                       )));
         },
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.of(context).primaryColorLight,
         child: const Icon(Icons.add),
       ),
       backgroundColor: Colors.grey.shade200,
     );
-  }
-
-  Future signout() async {
-    try {
-      print('Logout');
-      return await _auth.signOut();
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
   }
 }

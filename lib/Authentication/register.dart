@@ -29,8 +29,9 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Register'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
-      backgroundColor: const Color.fromARGB(255, 37, 130, 236),
+      backgroundColor: Theme.of(context).primaryColor,
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
@@ -180,6 +181,13 @@ class _RegisterState extends State<Register> {
                       });
                     }
                   },
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.redAccent),
+                      elevation: MaterialStateProperty.all(10),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)))),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(

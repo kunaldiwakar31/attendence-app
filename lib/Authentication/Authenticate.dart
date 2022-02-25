@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:attendence_app/Authentication/register.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +13,7 @@ class Authenticate extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 37, 130, 236),
+      backgroundColor: Theme.of(context).primaryColorLight,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,12 +35,23 @@ class Authenticate extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => const Register()));
                       },
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          elevation: MaterialStateProperty.all(10),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)))),
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Sign up',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54),
                         ),
                       )),
                 ),
@@ -51,6 +64,15 @@ class Authenticate extends StatelessWidget {
                 const SizedBox(width: 20),
                 Expanded(
                   child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.redAccent),
+                          elevation: MaterialStateProperty.all(10),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)))),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -62,7 +84,9 @@ class Authenticate extends StatelessWidget {
                         child: Text(
                           'Login',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                       )),
                 ),

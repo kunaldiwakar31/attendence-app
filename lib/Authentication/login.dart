@@ -24,8 +24,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Login Page'),
+          backgroundColor: Theme.of(context).primaryColorLight,
         ),
-        backgroundColor: const Color.fromARGB(255, 37, 130, 236),
+        backgroundColor: Theme.of(context).primaryColorLight,
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
@@ -95,6 +96,15 @@ class _LoginPageState extends State<LoginPage> {
                         signInWithEmailAndPassword(email, password);
                       }
                     },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.redAccent),
+                        elevation: MaterialStateProperty.all(10),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(20.0)))),
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
