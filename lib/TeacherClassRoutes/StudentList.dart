@@ -1,0 +1,61 @@
+import 'package:attendence_app/AppConstants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class StudentList extends StatefulWidget {
+  final uid;
+  StudentList({this.uid});
+  @override
+  State<StudentList> createState() => _StudentListState();
+}
+
+class _StudentListState extends State<StudentList> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: findStudents(widget.uid),
+        builder: (context, AsyncSnapshot<List> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: Text(snapshot.data![index]['rollno'],
+                        style: const TextStyle(fontSize: 20)),
+                    subtitle: Text(snapshot.data![index]['name'].toUpperCase()),
+                    trailing: const Text('79%'),
+                    onTap: () {},
+                  ),
+                );
+              },
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+}
+
+Future<List> findStudents(uid) async {
+  var ans = [];
+  var future = await FirebaseFirestore.instance
+      .collection(AppConstants.classesCollection)
+      .doc(uid)
+      .get();
+  var students = future.data()![AppConstants.studentsCollection];
+  for (int i = 0; i < students.length; i++) {
+    var student = await FirebaseFirestore.instance
+        .collection(AppConstants.studentsCollection)
+        .doc(students[i]['StudentId'])
+        .get();
+    ans.add({
+      'name': student.data()!['name'],
+      'rollno': student.data()!['rollno'],
+      'uid': students[i]['StudentId']
+    });
+  }
+  return ans;
+}
