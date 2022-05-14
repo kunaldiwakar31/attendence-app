@@ -1,4 +1,5 @@
 import 'package:attendence_app/Authentication/Authenticate.dart';
+import 'package:attendence_app/Blocs/StudentsBloc.dart';
 import 'package:attendence_app/Blocs/TeachersBloc.dart';
 import 'package:attendence_app/Home/TeacherHome.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +25,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TeachersBloc>(
-      create: (_) => TeachersBloc(),
-      child: MaterialApp(
-          theme: ThemeData(
-            primaryColor: const Color.fromRGBO(50, 75, 205, 1),
-            primaryColorLight: const Color.fromARGB(255, 68, 92, 228),
-          ),
-          home: const Authenticate()),
-    );
+    return ChangeNotifierProvider<StudentsBloc>(
+        create: (_) => StudentsBloc(),
+        child: ChangeNotifierProvider<TeachersBloc>(
+          create: (_) => TeachersBloc(),
+          child: MaterialApp(
+              theme: ThemeData(
+                primaryColor: const Color.fromRGBO(50, 75, 205, 1),
+                primaryColorLight: const Color.fromARGB(255, 68, 92, 228),
+              ),
+              home: const Authenticate()),
+        ));
   }
 }
+//MEFe7d5D6NEX6e4pW0ZU

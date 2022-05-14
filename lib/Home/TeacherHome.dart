@@ -76,7 +76,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            TeacherClass(uid: classUids[index])));
+                            TeacherClass(classUid: classUids[index])));
               },
             ),
           ),

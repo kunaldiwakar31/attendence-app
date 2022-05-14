@@ -81,33 +81,33 @@ Future joinClass(String uid, String classCode) async {
         .collection(AppConstants.classesCollection)
         .doc(classCode)
         .get();
+
     if (!future.exists) {
       throw 'Invaid Class Code';
     }
-    var Students = future['Students'];
-    for (int i = 0; i < Students.length; i++) {
-      if (Students[i]['StudentId'] == uid) {
-        throw Exception("Already Joined");
+    var students = future.data()!['Students'];
+    if (students != null) {
+      for (int i = 0; i < students.length; i++) {
+        if (students[i]['StudentId'] == uid) {
+          throw Exception("Already Joined");
+        }
       }
     }
     FirebaseFirestore dbRef = FirebaseFirestore.instance;
 
-    /* This is pending */
     await dbRef
         .collection(AppConstants.classesCollection)
         .doc(classCode)
         .update({
       'Students': FieldValue.arrayUnion([
-        {
-          {'StudentId': uid},
-          {'Attendance': {}}
-        }
+        {'StudentId': uid, 'Attendance': {}}
       ])
     });
 
     await dbRef.collection(AppConstants.studentsCollection).doc(uid).update({
-      'Classes': FieldValue.arrayUnion([classCode])
+      'Subjects': FieldValue.arrayUnion([classCode])
     });
+
     print('Class Joined');
     return 'Class Joined';
   } catch (e) {

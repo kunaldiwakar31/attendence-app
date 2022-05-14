@@ -43,7 +43,7 @@ class _StudentHomeState extends State<StudentHome> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Attendence App"),
+        title: const Text("Attendance App"),
       ),
       body: Container(
         key: GlobalKey(),

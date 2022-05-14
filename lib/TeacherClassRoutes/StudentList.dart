@@ -1,11 +1,11 @@
 import 'package:attendence_app/AppConstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StudentList extends StatefulWidget {
   final uid;
   StudentList({this.uid});
+
   @override
   State<StudentList> createState() => _StudentListState();
 }
@@ -24,9 +24,10 @@ class _StudentListState extends State<StudentList> {
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                     title: Text(snapshot.data![index]['rollno'],
-                        style: const TextStyle(fontSize: 20)),
+                        style: const TextStyle(fontSize: 18)),
                     subtitle: Text(snapshot.data![index]['name'].toUpperCase()),
-                    trailing: const Text('79%'),
+                    trailing:
+                        Text(snapshot.data![index]['attendancePercentage']),
                     onTap: () {},
                   ),
                 );
@@ -45,16 +46,18 @@ Future<List> findStudents(uid) async {
       .collection(AppConstants.classesCollection)
       .doc(uid)
       .get();
-  var students = future.data()![AppConstants.studentsCollection];
-  for (int i = 0; i < students.length; i++) {
+
+  var students = future.data()!['Students'];
+  for (var id in students.keys) {
     var student = await FirebaseFirestore.instance
         .collection(AppConstants.studentsCollection)
-        .doc(students[i]['StudentId'])
+        .doc(id)
         .get();
     ans.add({
       'name': student.data()!['name'],
       'rollno': student.data()!['rollno'],
-      'uid': students[i]['StudentId']
+      'uid': id,
+      'attendancePercentage': students[id].toString()
     });
   }
   return ans;

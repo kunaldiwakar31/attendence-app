@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:attendence_app/TeacherClassRoutes/StudentList.dart';
 
+import 'Calender.dart';
+
 class TeacherClass extends StatefulWidget {
-  final uid;
-  TeacherClass({this.uid});
+  final classUid;
+  TeacherClass({this.classUid});
 
   @override
   _TeacherClassState createState() => _TeacherClassState();
@@ -23,11 +25,10 @@ class _TeacherClassState extends State<TeacherClass> {
   @override
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
-      const Text(
-        'Register',
-        style: optionStyle,
+      Calender(
+        classUid: widget.classUid,
       ),
-      StudentList(uid: widget.uid),
+      StudentList(uid: widget.classUid),
       const Text(
         'Manage',
         style: optionStyle,

@@ -3,7 +3,7 @@ class Student {
   String rollno;
   String email;
   String userType;
-  List<Map<String, String>> subjects;
+  List<dynamic> subjects;
 
   Student(
       {required this.name,
